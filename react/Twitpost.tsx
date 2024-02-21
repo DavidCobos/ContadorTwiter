@@ -1,32 +1,23 @@
 // store-block/react/Countdown.tsx
-import React, { useState } from 'react'
-import { TimeSplit } from './typings/global'
-import { tick, getTwoDaysFromNow  } from './utils/time'
+import React from 'react'
 import { useCssHandles } from 'vtex.css-handles'
 import { FormattedMessage } from 'react-intl' 
 import { useQuery } from 'react-apollo'
 import useProduct from 'vtex.product-context/useProduct'
 import productReleaseDate from './graphql/productReleaseDate.graphql'
+//import { TwitterShareButton, TwitterIcon } from 'react-share'
 
 interface CountdownProps {
   targetDate: string
 }
 
-const DEFAULT_TARGET_DATE = getTwoDaysFromNow()
+const CSS_HANDLES = ['twitShare']
 
-const CSS_HANDLES = ['countdown']
-
-const Countdown: StorefrontFunctionComponent<CountdownProps> = ({}) => {
-
-  const [timeRemaining, setTime] = useState<TimeSplit>({
-    hours: '00',
-    minutes: '00',
-    seconds: '00',
-  })
+const Twitpost: StorefrontFunctionComponent<CountdownProps> = ({}) => {
 
   const handles = useCssHandles(CSS_HANDLES)
 
-  const titleText = <FormattedMessage id="editor.countdown.title"/>
+  const titleText = <FormattedMessage id="editor.twitposter.title"/>
 
   const { product } = useProduct()
 
@@ -61,28 +52,28 @@ const Countdown: StorefrontFunctionComponent<CountdownProps> = ({}) => {
     )
   }
 
-  tick(data?.product?.releaseDate || DEFAULT_TARGET_DATE, setTime)
+  console.log(data)
 
   return (
     <div className={`${handles.countdown} c-muted-1 db tc`}>
-      <span>{titleText}</span>
-      <h1>{`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}</h1>
+      <span>{titleText} ahora</span>
+      {/* <TwitterShareButton
+        url="https://davidprivarsa--privarsa.myvtex.com/herramientas-de-fin-de-brazo-centrador-garra-643666/p"
+        title="hola"
+        className="Demo__some-network__share-button">
+        <TwitterIcon
+          size={32}
+          round />
+      </TwitterShareButton> */}
     </div>
   )
 }
 
-Countdown.schema = {
+Twitpost.schema = {
   title: 'editor.countdown.title',
   description: 'editor.countdown.description',
   type: 'object',
-  properties: {
-    targetDate: {
-      title: 'Data final',
-      description: 'Data final utilizada no contador',
-      type: 'string',
-      default: null,
-    },
-  },
+  properties: { },
 }
 
-export default Countdown
+export default Twitpost
