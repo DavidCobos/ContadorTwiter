@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { useQuery } from 'react-apollo'
 import useProduct from 'vtex.product-context/useProduct'
 import productReleaseDate from './graphql/productReleaseDate.graphql'
-//import { TwitterShareButton, TwitterIcon } from 'react-share'
+import { TwitterShareButton, TwitterIcon } from 'react-share'
 
 interface CountdownProps {
   targetDate: string
@@ -52,19 +52,26 @@ const Twitpost: StorefrontFunctionComponent<CountdownProps> = ({}) => {
     )
   }
 
-  console.log(data)
+  console.log(product, data)
+  
+  const desc:string = product.description.toString() || ""
+  const titulo:string = `Mira esto: ${desc}`
+  const currentUrl = product.link.toString() || ""
 
   return (
-    <div className={`${handles.countdown} c-muted-1 db tc`}>
-      <span>{titleText} ahora</span>
-      {/* <TwitterShareButton
-        url="https://davidprivarsa--privarsa.myvtex.com/herramientas-de-fin-de-brazo-centrador-garra-643666/p"
-        title="hola"
-        className="Demo__some-network__share-button">
+    <div className={`${handles.countdown} db tc`}>
+      <span>{titleText}</span> <br/>
+      <span>{titulo}</span> <br/>
+      <span>{currentUrl}</span> <br/>
+
+      <TwitterShareButton
+        url={currentUrl}
+        title={titulo}
+        className="Twiter-share-button">
         <TwitterIcon
           size={32}
           round />
-      </TwitterShareButton> */}
+      </TwitterShareButton>
     </div>
   )
 }
