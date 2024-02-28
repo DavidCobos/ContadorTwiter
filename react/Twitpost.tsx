@@ -1,10 +1,8 @@
 // store-block/react/Countdown.tsx
 import React from 'react'
 import { useCssHandles } from 'vtex.css-handles'
-import { FormattedMessage } from 'react-intl' 
-import { useQuery } from 'react-apollo'
+import { FormattedMessage } from 'react-intl'
 import useProduct from 'vtex.product-context/useProduct'
-import productReleaseDate from './graphql/productReleaseDate.graphql'
 import { TwitterShareButton, TwitterIcon } from 'react-share'
 
 interface CountdownProps {
@@ -20,39 +18,6 @@ const Twitpost: StorefrontFunctionComponent<CountdownProps> = ({}) => {
   const titleText = <FormattedMessage id="editor.twitposter.title"/>
 
   const { product } = useProduct()
-
-  const { data, loading, error } = useQuery(productReleaseDate, {
-    variables: {
-      slug: product?.linkText
-    },
-    ssr: false
-  })
-
-  if (!product) {
-    return (
-      <div>
-        <span>No hay producto en el contexto</span>
-      </div>
-    )
-  }
-
-  if (loading) {
-    return (
-      <div>
-        <span>Cargando...</span>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div>
-        <span>Error!</span>
-      </div>
-    )
-  }
-
-  console.log(product, data)
   
   const desc:string = product.description.toString() || ""
   const titulo:string = `Mira esto: ${desc}`
